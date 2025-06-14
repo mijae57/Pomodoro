@@ -1,0 +1,346 @@
+body {
+  margin: 0;
+  background: #1e90ff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: background-color 0.5s;
+  color: white;
+}
+
+/* 작업/휴식 모드 배경 */
+body.work {
+  background-color: #1e90ff;
+}
+body.break {
+  background-color: #2ecc71;
+}
+
+.pomodoro-container {
+  background: white;
+  width: 400px;
+  height: 250px;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 시작 눌렀을 때 왼쪽 상단으로 이동 */
+body.mini .pomodoro-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 400px;
+  height: 250px;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.timer {
+  font-size: 60px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* 초기 사각형 UI 버튼 - 집중 모드 (파랑) */
+body.work #pomodoro-container .controls button {
+  background: #3498db;
+  color: white;
+}
+body.work #pomodoro-container .controls button:hover {
+  background: #2980b9;
+}
+
+/* 초기 사각형 UI 버튼 - 휴식 모드 (초록) */
+body.break #pomodoro-container .controls button {
+  background: #27ae60;
+  color: white;
+}
+body.break #pomodoro-container .controls button:hover {
+  background: #1e8e3e;
+}
+
+/* 초기 및 실행 중 UI 버튼 공통 크기 및 스타일 */
+#pomodoro-container .controls button,
+#active-view .controls button {
+  padding: 10px 18px;
+  margin: 0 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  height: 40px;
+  line-height: 1;
+  box-sizing: border-box;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* 실행 중 UI 버튼 - 배경 흰색 */
+#active-view .controls button {
+  background: white;
+}
+
+/* 실행 중 UI 버튼 글자 색 - 집중 모드 (파랑) */
+body.work #active-view .controls button {
+  color: #155dba;
+}
+
+/* 실행 중 UI 버튼 글자 색 - 휴식 모드 (초록) */
+body.break #active-view .controls button {
+  color: #1e8e3e;
+}
+
+/* 실행 중 UI 버튼 글자 색 호버 효과 */
+#active-view .controls button:hover {
+  opacity: 0.7;
+}
+
+.session-counter {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* 실행 중 UI */
+.active-view {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.big-timer {
+  font-size: 80px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* 선형 바 */
+.progress {
+  width: 300px;
+  height: 10px;
+  background: transparent; /* 회색 배경 제거 */
+  margin-bottom: 20px;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid white; /* 외곽선 추가로 더 또렷하게 */
+}
+/* 기본 프로그래스 바 스타일 */
+#progress-bar {
+  height: 100%;
+  transition: width 1s linear;
+  border-radius: 2px;
+}
+
+/* 작업 모드 - 진한 파란색 */
+body.work #progress-bar {
+  background-color: #155dba; /* 배경보다 진한 파란색 */
+}
+
+/* 휴식 모드 - 진한 초록색 */
+body.break #progress-bar {
+  background-color: #1e8e3e; /* 배경보다 진한 초록색 */
+}
+
+#break-button {
+  padding: 10px 20px;
+  font-size: 18px; /* 글씨 조금 크게 */
+  font-weight: 700; /* 굵게 */
+  background: #f1c40f; /* 노란색 */
+  border: none;
+  border-radius: 8px;
+  color: black;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#break-button:hover {
+  background: #d4ac0d;
+}
+
+.todo-container {
+  position: fixed;
+  top: 30px;
+  right: 50px;
+  width: 360px;
+  height: 600px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-container {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 10px 15px;
+  margin-bottom: 12px;
+  background: #f9f9f9;
+  color: black;
+  font-size: 14px;
+  user-select: none;
+}
+
+.settings-container h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+#todo-input {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  min-width: 0; /* flex 줄이기 허용 */
+}
+#add-todo {
+  width: 55px;
+  margin-left: 8px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  height: 38px;
+  line-height: 1;
+  box-sizing: border-box;
+  transition: background-color 0.3s, color 0.3s;
+}
+/* 작업 모드 - 파란 버튼 */
+body.work #add-todo {
+  background: #3498db;
+  color: white;
+}
+body.work #add-todo:hover {
+  background: #2980b9;
+}
+
+/* 휴식 모드 - 초록 버튼 */
+body.break #add-todo {
+  background: #27ae60;
+  color: white;
+}
+body.break #add-todo:hover {
+  background: #1e8e3e;
+}
+
+#todo-list {
+  list-style: none;
+  padding-left: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+#todo-list li {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+#todo-list li:hover {
+  background: #f0f0f0;
+  text-decoration: line-through;
+}
+
+#pomo-count {
+  width: 60px; /* 고정 너비 */
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 요소들 사이 간격 */
+  margin-bottom: 12px;
+}
+
+body.mini .todo-container {
+  display: none;
+}
+body.mini #break-button {
+  display: inline-block !important;
+}
+#audio-player-container {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#audio-player {
+  width: 100%;
+  max-width: 300px;
+  outline: none;
+}
+
+#audio-player-container {
+  padding: 12px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.time-settings {
+  margin-top: 10px;
+}
+#focus-mode-checkbox {
+  margin-bottom: 10px;
+}
+.time-settings {
+  display: flex;
+  align-items: center;
+}
+
+.time-settings > div {
+  margin-bottom: 0; /* inline flex라 margin-bottom 제거 */
+}
+
+.time-settings label {
+  font-weight: 600;
+}
+
+.time-settings select {
+  padding: 4px 4px;
+  font-size: 14px;
+  margin-right: 2px;
+}
+
+.time-settings button {
+  padding: 4px 4px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+
+.time-settings button:hover {
+  background-color: #357abd;
+}

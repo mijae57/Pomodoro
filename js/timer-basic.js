@@ -22,8 +22,8 @@ const focusModeCheckbox = document.getElementById("focus-mode-checkbox");
 const workDurationSelect = document.getElementById("work-duration-select");
 const breakDurationSelect = document.getElementById("break-duration-select");
 
-let WORK_DURATION = 10;
-let BREAK_DURATION = 7;
+let WORK_DURATION = 25*60;
+let BREAK_DURATION = 5*60;
 
 let remaining = WORK_DURATION;
 let isBreak = false;

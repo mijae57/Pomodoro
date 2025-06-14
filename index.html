@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>뽀모단 타이머</title>
+    <link rel="stylesheet" href="./CSS/style.css" />
+  </head>
+  <body class="work">
+    <!-- 초기 네모 UI -->
+    <div class="pomodoro-container" id="pomodoro-container">
+      <div class="timer" id="timer">00:12</div>
+
+      <div class="controls">
+        <button id="start">시작</button>
+        <button id="pause-init">일시정지</button>
+        <button id="reset-init">초기화</button>
+      </div>
+
+      <div class="session-counter">뽀모단 코인 : <span id="count">0</span></div>
+
+      <!-- 휴식 전환 버튼 (숨김) -->
+      <button id="break-button" style="display: none; margin-top: 20px">
+        휴식으로 넘어가기
+      </button>
+    </div>
+
+    <!-- 시작 후 보여질 새 UI -->
+    <div class="active-view" id="active-view" style="display: none">
+      <div class="big-timer" id="big-timer">00:12</div>
+      <div class="progress"><div id="progress-bar"></div></div>
+      <div class="controls">
+        <button id="pause-active">일시정지</button>
+        <button id="reset-active">초기화</button>
+      </div>
+    </div>
+
+    <div class="todo-container" id="todo-container">
+      <h2>TO DO LIST</h2>
+
+      <!-- 설정 영역 추가 -->
+
+      <div class="input-row">
+        <input type="text" id="todo-input" placeholder="할 일 입력" />
+        <select id="pomo-count">
+          <option value="1" selected>1회</option>
+          <option value="2">2회</option>
+          <option value="3">3회</option>
+          <option value="4">4회</option>
+          <option value="5">5회</option>
+        </select>
+        <button id="add-todo">추가</button>
+      </div>
+      <ul id="todo-list"></ul>
+      <!-- 설정 항목 예시 -->
+      <div class="settings-container">
+        <h3>모드 설정</h3>
+        <label>
+          <input type="checkbox" id="focus-mode-checkbox" />
+          완전 집중 모드
+        </label>
+        <h3>세션 설정</h3>
+        <div class="time-settings">
+          <div style="margin-bottom: 10px">
+            <label for="work-duration-select">집중 시간(분)</label>
+            <select id="work-duration-select">
+              <option value="25" selected>25분</option>
+              <option value="30">30분</option>
+              <option value="35">35분</option>
+              <option value="40">40분</option>
+              <option value="45">45분</option>
+              <option value="50">50분</option>
+              <option value="55">55분</option>
+              <option value="60">60분</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom: 10px">
+            <label for="break-duration-select">휴식 시간(분)</label>
+            <select id="break-duration-select">
+              <option value="3">3분</option>
+              <option value="5" selected>5분</option>
+              <option value="10">10분</option>
+              <option value="15">15분</option>
+              <option value="20">20분</option>
+            </select>
+          </div>
+
+          <button onclick="applyDurations()">확인</button>
+        </div>
+      </div>
+
+      <div id="audio-player-container">
+        <!-- 음악 선택 드롭다운 -->
+        <select id="music-select">
+          <option value="./sound/편안한 피아노곡.mp3">편안한 피아노곡</option>
+          <option value="./sound/부드러운 재즈곡.mp3">부드러운 재즈곡</option>
+          <option value="" id="user-music-option" disabled>
+            사용자곡 없음
+          </option>
+        </select>
+
+        <!-- 사용자 업로드 -->
+        <input type="file" id="audio-upload" accept="audio/*" />
+
+        <!-- 실제 플레이어 -->
+        <audio id="audio-player" controls loop>
+          <source src="./sound/편안한 피아노곡.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+
+    <script src="./js/script.js"></script>
+    
+</html>
